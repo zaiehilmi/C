@@ -28,7 +28,7 @@ void main(int argc, char **argv) {
     }
 
     printf("sigalarm PID: %u\n", getpid());	//proses untuk hasilkan penggera
-    printf("Penggera diaktifkan, tunggu sebentar...\n");		  //menerima kejutn utk melakukan tugasan
+    printf("Penggera diaktifkan, tunggu sebentar...\n");		//menerima kejutn utk melakukan tugasan
 
     tindak.sa_handler = tetapkanBendera;
     sigaction(SIGALRM, &tindak, NULL);
