@@ -3,7 +3,6 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <unistd.h>
-#include <regex.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -28,7 +27,7 @@ void main(int argc, char **argv) {
     }
 
     printf("sigalarm PID: %u\n", getpid());	//proses untuk hasilkan penggera
-    printf("Penggera diaktifkan, tunggu sebentar...\n");		//menerima kejutn utk melakukan tugasan
+    printf("Penggera diaktifkan, tunggu %s minit...\n", argv[1]);		//menerima kejutn utk melakukan tugasan
 
     tindak.sa_handler = tetapkanBendera;
     sigaction(SIGALRM, &tindak, NULL);
