@@ -1,4 +1,4 @@
-//Latihan 3-5
+//Latihan 3-5 letak close() kat
 
 #include <unistd.h>
 #include <stdio.h>
@@ -8,16 +8,16 @@
 
 #define SAIZTIMBAL 100
 
-char *mesej1 = "hai #1";
+char *mesej1 = "hai #1";        //mesej yg mahu dihantar
 char *mesej2 = "hai #2";
 
-int main(int argc, char const *argv[])
-{
+int main() {
+
     char timbal[SAIZTIMBAL];
-    int paip[2], j;
+    int paipfd[2], j;             //ada 2 ending point, read write
     int pid;
 
-    if (pipe(paip) == -1) {
+    if (pipe(paipfd) == -1) {     //membina dan membuka paip
         perror("Ralat pada pipe()");
         exit(1);
     }
@@ -29,17 +29,19 @@ int main(int argc, char const *argv[])
             perror("Ralat pada fork()");
             break;
 
-        case 0:
-            write(paip[1], mesej1, SAIZTIMBAL);
-            write(paip[1], mesej2, SAIZTIMBAL);
+        case 0:     //write 2 mesej ke parent via paipfd[1]
+            write(paipfd[1], mesej1, SAIZTIMBAL);       
+            write(paipfd[1], mesej2, SAIZTIMBAL);
+            close(paipfd[1]);
             break;
             
-        default:
+        default:    //parent read guna paipfd[0]
             for (j = 0; j < 2; j++) {
-                read(paip[0], timbal, SAIZTIMBAL);
+                read(paipfd[0], timbal, SAIZTIMBAL);
                 printf("%s\n", timbal);
             }
-        wait(NULL);        
-    }    
+            close(paipfd[0]);
+        wait(NULL);   //menunggu child utk selesai     
+    }
     return 0;
 }
