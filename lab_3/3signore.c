@@ -5,21 +5,22 @@
 #include <signal.h>
 #include <unistd.h>
 
-void kendaliIsyarat(int isy);
+// void kendaliIsyarat(int isy);
 
 int main() {
     static struct sigaction tindak;
-    tindak.sa_handler = kendaliIsyarat;
+    // tindak.sa_handler = kendaliIsyarat;
 
     printf("Sebelum sigaction(), minta tekan [CTRL]+C!\n");
     sleep(5);
 
-    sigaction(SIGCONT, &tindak, NULL);
+    signal(SIGINT, SIG_IGN);
+    // sigaction(SIGCONT, &tindak, NULL);
     printf("Selepas sigaction(), minta tekan [CTRL]+C!\n");
     sleep(7);
     exit(0);
 }
 
-void kendaliIsyarat(int isy){
-    printf("Menerima isyarat mencelah %d\n", isy);
-}
+// void kendaliIsyarat(int isy){
+//     printf("Menerima isyarat mencelah %d\n", isy);
+// }
