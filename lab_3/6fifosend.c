@@ -33,9 +33,8 @@ int main(int argc, char **argv) {
         strcpy(timbal, argv[j]);  //copy setiap mesej ke timbal
 
         nwrite = write(fd, timbal, SAIZTIMBAL - 1);  //hantar mesej dari timbal ke fail fifo
-        if (nwrite == -1) {
+        if (nwrite == -1)
             perror("Ralat pada write()");
-        }
     }
     close(fd);
     return 0;
