@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
     }
 
     for (j = 0; j < argc; j++) {
-        if (strlen(argv[j] > SAIZTIMBAL)) {
+        if (strlen(argv[j]) > SAIZTIMBAL) {
             printf("Mesej terlalu panjang\n");
             continue;
         }
