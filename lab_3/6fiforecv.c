@@ -10,7 +10,7 @@
 
 char *fifo = "penghantaranfifo";  //nama fail fifo
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char **argv) {
     int fd;
     char timbal[SAIZTIMBAL];
 
@@ -26,13 +26,15 @@ int main(int argc, char const *argv[]) {
         exit(2);
     }
 
+    int baca = 1;
     for (;;) {
-        if (read(fd, timbal, SAIZTIMBAL - 1) < 0)
+        baca = read(fd, timbal, SAIZTIMBAL - 1);
+
+        if (baca < 0)
             perror("Ralat pada read()\n");
 
         printf("Diterima: %s\n", timbal);
-        // if (timbal == )
-        //     exit(3);
     }
+    close(fd);
     return 0;
 }
