@@ -7,7 +7,7 @@
 #include <wait.h>
 
 #define SAIZTIMBAL 100
-
+ 
 char *mesej1 = "hai #1";        //mesej yg mahu dihantar
 char *mesej2 = "hai #2";
 
