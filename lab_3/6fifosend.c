@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
         exit(2);
     }
 
-    for (j = 0; j < argc; j++) {
+    for (j = 1; j < argc; j++) {
         if (strlen(argv[j]) > SAIZTIMBAL) {  //cek saiz mesej
             printf("Mesej terlalu panjang\n");
             continue;
@@ -33,8 +33,10 @@ int main(int argc, char **argv) {
         strcpy(timbal, argv[j]);  //copy setiap mesej ke timbal
 
         nwrite = write(fd, timbal, SAIZTIMBAL - 1);  //hantar mesej dari timbal ke fail fifo
-        if (nwrite == -1)
+        if (nwrite == -1) {
             perror("Ralat pada write()");
+            exit(3);
+        }
     }
     close(fd);
     return 0;
