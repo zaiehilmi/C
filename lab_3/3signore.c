@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
-
+ 
 // void kendaliIsyarat(int isy);
 
 int main() {
