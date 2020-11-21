@@ -1,3 +1,5 @@
+//Latihan 3-6.2
+
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>

@@ -1,3 +1,5 @@
+//latihan 3-6.1
+
 #include <errno.h>
 #include <fcntl.h>
 #include <signal.h>

@@ -9,7 +9,7 @@ void kendaliIsyarat(int isy);
 
 int main() {
     static struct sigaction tindak;
-    tindak.sa_handler = kendaliIsyarat;
+    tindak.sa_handler = SIG_DFL;
 
     printf("Sebelum sigaction(), tolong tekan [CTRL]+C!\n");
     sleep(5);

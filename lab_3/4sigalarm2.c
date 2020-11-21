@@ -22,7 +22,7 @@ void main(int argc, char **argv) {
         exit(1);
     }
 
-    masa = atoi(argv[1]);  //penukaran saat ke minit dan string ke int
+    masa = atoi(argv[1]);  //penukaran string ke int
     if (masa <= 0) {       //tengok masa yg dimasukkan betul atau tak
         fprintf(stderr, "Masalah pada input: masa\n");
         exit(2);
