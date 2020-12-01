@@ -1,9 +1,9 @@
 //Exercise 2-2
 
 #include <stdio.h>
-#include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <unistd.h>
 
 int main(int argc, char const *argv[]) {
     pid_t pid;
@@ -15,11 +15,11 @@ int main(int argc, char const *argv[]) {
             break;
         }
         case (0): {
-            printf("Kes 0: \n--Proses anak = %d,\n--proses ibubapa = %d\n", getpid(), getppid());
+            printf("Kes 0: \n--Proses anak = %d,\n--proses induk= %d\n", getpid(), getppid());
             break;
         }
         default: {
-            printf("Lalai: \n--Proses anak = %d, \n--proses ibubapa = %d\n", pid, getpid());
+            printf("Lalai: \n--Proses anak = %d, \n--proses induk = %d\n", pid, getpid());
             wait(NULL);
             break;
         }
