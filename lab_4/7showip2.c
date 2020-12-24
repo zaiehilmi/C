@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
     printf("Alamat IP untuk %s: \n\n", argv[1]);
 
     for (ptr = res; ptr != NULL; ptr = ptr->ai_next) {
-        void *alamat;
+        struct in_addr alamat;
         void *versiip;
 
         //dapatkan pointer ke alamatnya
@@ -41,21 +41,21 @@ int main(int argc, char *argv[]) {
         if (ptr->ai_family == AF_INET) {
             struct sockaddr_in *ipv4 = (struct sockaddr_in *)ptr->ai_addr;
 
-            alamat = &(ipv4->sin_addr);
+            alamat = ipv4->sin_addr;
             versiip = "IPv4";
         }
         //IPv6
-        else {
+        /* else {
             struct sockaddr_in6 *ipv6 = (struct sockaddr_in6 *)ptr->ai_addr;
 
             alamat = &(ipv6->sin6_addr);
             versiip = "IPv6";
-        }
+        } */
 
         //tukar IP ke rentetan untuk paparkan
-        inet_ntop(ptr->ai_family, alamat, rentetanip, sizeof(rentetanip));
-        printf("%s\n", rentetanip);
-        // printf(" %s: %s\n", versiip, rentetanip);
+        // inet_ntop(ptr->ai_family, alamat, rentetanip, sizeof(rentetanip));
+
+        printf(" %s: %s\n", versiip, inet_ntoa(alamat));
     }
     freeaddrinfo(res);
     return 0;
