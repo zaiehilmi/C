@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
         printf("Pengunaan: %s namahos\n", argv[0]);
         exit(1);
     }
-    namahos = gethostbyname(argv[1]);
+    namahos = gethostbyname(argv[1]);  //mendapatkan nama hos
 
     if (!namahos) {
         printf("Ralat pada gethostbyname()\n");

@@ -8,7 +8,7 @@
 int main() {
     struct in_addr alamat;
 
-    inet_pton(AF_INET, "10.4.3.1", &alamat);
-    // inet_aton("10.4.3.1", &alamat);  //convert dari string ke network
+    inet_pton(AF_INET, "10.4.3.1", &alamat);  //convert dari string ke network
+    // inet_aton("10.4.3.1", &alamat);
     printf("Hello %s\n", inet_ntoa(alamat));
 }

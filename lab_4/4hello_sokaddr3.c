@@ -14,7 +14,7 @@ int main(void) {
     // inet_aton("10.4.3.1", &(sokettcp.sin_addr));
     sokettcp.sin_addr.s_addr = inet_addr("10.4.3.1");
 
-    // print alamat IP
+    // papar alamat IP
     printf("Hello %s\n", inet_ntoa(sokettcp.sin_addr));
 
     return 0;

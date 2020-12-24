@@ -7,15 +7,14 @@
 #include <string.h>
 
 int main() {
-    char hostname[] = "twitter.com";  //the hostname we are looking up //
-    //char hostname[] = "idawaty";         //the hostname we are looking up
+    char hostname[] = "twitter.com";  //nama hos untuk dapatkan ip
 
-    struct addrinfo *result;                     //to store results
-    struct addrinfo hints;                       //to indicate information we want
-    struct sockaddr_in *saddr;                   //to reference address
-    int s;                                       //for error checking
-    memset(&hints, 0, sizeof(struct addrinfo));  //zero out hints
-    hints.ai_family = AF_INET;                   //we only want IPv4 addresses
+    struct addrinfo *result;                     //simpan dalam ni
+    struct addrinfo hints;                       //demand apa info yang kita nak
+    struct sockaddr_in *saddr;                   //rujukan alamat
+    int s;                                       //cek ralat
+    memset(&hints, 0, sizeof(struct addrinfo));  //tukar kandungan hints nilai zero
+    hints.ai_family = AF_INET;                   //kita nak ipv4 so gunakan AF_INET
     //Convert the hostname to an address
     if ((s = getaddrinfo(hostname, NULL, &hints, &result)) != 0) {
         fprintf(stderr, "getaddrtnfo: %s\n", gai_strerror(s));
