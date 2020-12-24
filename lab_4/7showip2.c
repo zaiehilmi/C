@@ -1,4 +1,5 @@
-//Latihan 4-7 ada masalah kat baris 48
+//Latihan 4-7 - use inet_ntoa() function instead of inet_ntop() & Add useful comments in each of the codes
+//ada masalah kat baris 58
 
 #include <arpa/inet.h>
 #include <netdb.h>
@@ -15,7 +16,7 @@ int main(int argc, char *argv[]) {
     char rentetanip[INET6_ADDRSTRLEN];
 
     if (argc != 2) {
-        fprintf(stderr, "Penggunaan: %s nama_hos", __FILE__);
+        fprintf(stderr, "Penggunaan: %s nama_hos\n", __FILE__);
         exit(10);
     }
 
@@ -31,7 +32,7 @@ int main(int argc, char *argv[]) {
 
     printf("Alamat IP untuk %s: \n\n", argv[1]);
 
-    for (ptr = 0; ptr != NULL; ptr = ptr->ai_next) {
+    for (ptr = res; ptr != NULL; ptr = ptr->ai_next) {
         void *alamat;
         void *versiip;
 
@@ -45,15 +46,16 @@ int main(int argc, char *argv[]) {
         }
         //IPv6
         else {
-            struct sockaddr_in *ipv6 = (struct sockaddr_in6 *)ptr->ai_addr;
+            struct sockaddr_in6 *ipv6 = (struct sockaddr_in6 *)ptr->ai_addr;
 
-            alamat = &(ipv6->sin_addr);
+            alamat = &(ipv6->sin6_addr);
             versiip = "IPv6";
         }
 
         //tukar IP ke rentetan untuk paparkan
         inet_ntop(ptr->ai_family, alamat, rentetanip, sizeof(rentetanip));
-        printf(" %s: %s\n", versiip, rentetanip);
+        printf("%s\n", rentetanip);
+        // printf(" %s: %s\n", versiip, rentetanip);
     }
     freeaddrinfo(res);
     return 0;

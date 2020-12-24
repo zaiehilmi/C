@@ -1,4 +1,4 @@
-/* hello_getaddrinfo.c*/
+//Latihan 4-5 - Modify hellogetaddrinfo.c to display the IP address of any domain name other than upm.edu.my
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <netinet/in.h>
@@ -7,7 +7,7 @@
 #include <string.h>
 
 int main() {
-    char hostname[] = "www.upm.edu.my";  //the hostname we are looking up //
+    char hostname[] = "twitter.com";  //the hostname we are looking up //
     //char hostname[] = "idawaty";         //the hostname we are looking up
 
     struct addrinfo *result;                     //to store results

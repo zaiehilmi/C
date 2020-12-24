@@ -1,4 +1,4 @@
-//Latihan 4-9
+//Latihan 4-9 - display the port number of any server other than FTP that uses TCP or UDP protocol in /etc/services
 
 #include <netdb.h>
 #include <netinet/in.h>

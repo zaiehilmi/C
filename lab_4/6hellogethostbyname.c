@@ -1,4 +1,5 @@
-//Latihan 4-6 ralat pada gethostbyname()
+//Latihan 4-6 - display the IP address of any domain name other than upm.edu.my and idawaty
+//ralat pada gethostbyname()
 
 #include <arpa/inet.h>
 #include <netdb.h>
@@ -13,13 +14,14 @@ int main(int argc, char *argv[]) {
         printf("Pengunaan: %s namahos\n", argv[0]);
         exit(1);
     }
+    namahos = gethostbyname(argv[1]);
+
     if (!namahos) {
         printf("Ralat pada gethostbyname()\n");
         exit(100);
     }
-    gethostbyname(argv[1]);
-    printf("Nama: %s\n", namahos->h_name);
 
+    printf("Nama: %s\n", namahos->h_name);
     alamatip = *(struct in_addr *)namahos->h_addr_list;
     printf("Alamat IP: %s\n", inet_ntoa(alamatip));
 

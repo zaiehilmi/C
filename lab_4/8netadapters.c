@@ -1,4 +1,4 @@
-//Latihan 4-8
+//Latihan 4-8 - Add useful comments in each of the codes
 
 #include <ifaddrs.h>
 #include <netdb.h>
