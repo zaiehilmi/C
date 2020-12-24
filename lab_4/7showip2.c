@@ -1,5 +1,4 @@
 //Latihan 4-7 - use inet_ntoa() function instead of inet_ntop() & Add useful comments in each of the codes
-//ada masalah kat baris 58
 
 #include <arpa/inet.h>
 #include <netdb.h>
@@ -19,11 +18,13 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Penggunaan: %s nama_hos\n", __FILE__);
         exit(10);
     }
-
+    //gantikan nilai pada petunjuk dgn 0 dan seterusnya declare saiz untuk family dan socktype
     memset(&petunjuk, 0, sizeof(petunjuk));
     petunjuk.ai_family = AF_UNSPEC;
     petunjuk.ai_socktype = SOCK_STREAM;
 
+    //proses untuk mendapatkan info berkaitan dgn website dipilih
+    //dan paparkan error kalau tak dpt info
     status = getaddrinfo(argv[1], NULL, &petunjuk, &res);
     if (status != 0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(status));
@@ -39,6 +40,7 @@ int main(int argc, char *argv[]) {
         //dapatkan pointer ke alamatnya
         //IPv4
         if (ptr->ai_family == AF_INET) {
+            //point ptr ke ai_addr untuk dapatkan alamat ip kemudian point ke sin_addr untuk akses alamat
             struct sockaddr_in *ipv4 = (struct sockaddr_in *)ptr->ai_addr;
 
             alamat = ipv4->sin_addr;
@@ -55,7 +57,7 @@ int main(int argc, char *argv[]) {
         //tukar IP ke rentetan untuk paparkan
         // inet_ntop(ptr->ai_family, alamat, rentetanip, sizeof(rentetanip));
 
-        printf(" %s: %s\n", versiip, inet_ntoa(alamat));
+        printf("%s: %s\n", versiip, inet_ntoa(alamat));
     }
     freeaddrinfo(res);
     return 0;

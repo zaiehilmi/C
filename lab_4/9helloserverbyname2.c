@@ -10,7 +10,7 @@
 void main() {
     struct servent *info;
     char namaport[512] = "https";
-    info = getservbyname(namaport, "udp");
+    info = getservbyname(namaport, "tcp");
     if (!info) {
         printf("Pelayan %s tidak wujud\n", namaport);
         exit(100);
