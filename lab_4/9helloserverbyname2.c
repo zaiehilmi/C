@@ -16,5 +16,5 @@ void main() {
         exit(100);
     }
 
-    printf("Port pelayan FTP: %d\n", ntohs(info->s_port));
+    printf("Port pelayan %s: %d\n", namaport, ntohs(info->s_port));
 }
