@@ -1,5 +1,5 @@
 //Latihan 5-4 - use setsockopt() and solve the problem ralat untuk bind()
-
+//baris 30
 #include "arpa/inet.h"
 
 #define SAIZTIMBAL 1024
@@ -27,6 +27,7 @@ int main(void) {
     alamLayan.sin_port = htons(TCP_SERVER_ECHO_PORT);
 
     //ikat soketfd dgn alamat soket
+    setsockopt(soketfd, SOL_SOCKET, SO_REUSEADDR, 0, 4);
     temp = bind(soketfd, (struct sockaddr *)&alamLayan, sizeof(alamLayan));
     if (temp < 0)
         printf("TCPECHOSERVER: Ralat untuk mengikat soket");
@@ -44,12 +45,12 @@ int main(void) {
     do {
         //menerima mesej drpd pelanggan melalui soketfd pelanggan
         recv(soketfd_cli, timbal, SAIZTIMBAL, 0);
-        printf("Menerima mesej [%s]\n", timbal);
+        printf("Menerima mesej: %s\n", timbal);
 
         //menghantar kembali mesej yang diterima kepada pelanggan
         send(soketfd_cli, timbal, SAIZTIMBAL, 0);
-        printf("Menghantar kembali mesej [%s]\n\n", timbal);
-    } while (strcmp(timbal, "/bye"));
+        printf("Menghantar kembali mesej: %s\n\n", timbal);
+    } while (strcmp(timbal, "\bye"));
 
     close(soketfd_cli);
     close(soketfd);

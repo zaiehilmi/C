@@ -42,7 +42,7 @@ int main(void) {
     do {
         //menerima mesej drpd pelanggan melalui soketfd pelanggan
         recv(soketfd_cli, timbal, SAIZTIMBAL, 0);
-        printf("Menerima mesej [%s]\n", timbal);
+        printf("Menerima mesej: %s\n", timbal);
 
         //menghantar kembali mesej yang diterima kepada pelanggan
         send(soketfd_cli, timbal, SAIZTIMBAL, 0);

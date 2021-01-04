@@ -1,5 +1,5 @@
 //Latihan 5-3 - use read() and write() instead of send() and recv()
-
+//baris 47 & 52
 #include "arpa/inet.h"
 
 #define SAIZTIMBAL 1024
@@ -43,13 +43,15 @@ int main(void) {
 
     do {
         //menerima mesej drpd pelanggan melalui soketfd pelanggan
-        recv(soketfd_cli, timbal, SAIZTIMBAL, 0);
-        printf("Menerima mesej [%s]\n", timbal);
+        // recv(soketfd_cli, timbal, SAIZTIMBAL, 0);
+        read(soketfd_cli, timbal, SAIZTIMBAL);
+        printf("Menerima mesej: %s\n", timbal);
 
         //menghantar kembali mesej yang diterima kepada pelanggan
-        send(soketfd_cli, timbal, SAIZTIMBAL, 0);
-        printf("Menghantar kembali mesej [%s]\n\n", timbal);
-    } while (strcmp(timbal, "/bye"));
+        // send(soketfd_cli, timbal, SAIZTIMBAL, 0);
+        write(soketfd_cli, timbal, SAIZTIMBAL);
+        printf("Menghantar kembali mesej: %s\n\n", timbal);
+    } while (strcmp(timbal, "\bye"));
 
     close(soketfd_cli);
     close(soketfd);

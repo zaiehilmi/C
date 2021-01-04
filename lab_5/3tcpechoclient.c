@@ -1,6 +1,6 @@
 //Latihan 5-3 - use read() and write() instead of send() and recv().
-
-#include "inet.h"
+//baris 47 & 54
+#include "arpa/inet.h"
 
 #define SAIZTIMBAL 1024
 
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     //menghubungkan ke pelayan
     int temp = connect(soketfd, (struct sockaddr *)&alamLayan, sizeof(alamLayan));
     if (temp < 0) {
-        printf("Tidak boleh disambungkan");
+        printf("Tidak boleh disambungkan\n");
         exit(5);
     }
 
@@ -39,17 +39,20 @@ int main(int argc, char *argv[]) {
 
     do {
         printf("Masukkan mesej..\n");
-        gets(timbal);
+        // gets(timbal);
+        fgets(timbal, SAIZTIMBAL, stdin);
 
         //hantar mesej melalui soketfd
-        send(soketfd, timbal, SAIZTIMBAL, 0);
+        // send(soketfd, timbal, SAIZTIMBAL, 0);
+        write(soketfd, timbal, SAIZTIMBAL);
 
         //kosongkan mesej daripada pelayan
         bzero(timbal, sizeof(timbal));
 
         //menerima mesej daripada pelayan
-        recv(soketfd, timbal, SAIZTIMBAL, 0);
-        printf("Menerima kembali [%s]\n\n", timbal);
+        // recv(soketfd, timbal, SAIZTIMBAL, 0);
+        read(soketfd, timbal, SAIZTIMBAL);
+        printf("Menerima kembali: %s\n\n", timbal);
 
     } while (strcmp(timbal, "\bye"));
 

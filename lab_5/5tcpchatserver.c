@@ -44,12 +44,12 @@ int main(void) {
     do {
         //menerima mesej drpd pelanggan melalui soketfd pelanggan
         recv(soketfd_cli, timbal, SAIZTIMBAL, 0);
-        printf("Menerima mesej [%s]\n", timbal);
+        printf("Menerima mesej: %s\n", timbal);
 
         //menghantar kembali mesej yang diterima kepada pelanggan
         send(soketfd_cli, timbal, SAIZTIMBAL, 0);
-        printf("Menghantar kembali mesej [%s]\n\n", timbal);
-    } while (strcmp(timbal, "/bye"));
+        printf("Menghantar kembali mesej: %s\n\n", timbal);
+    } while (strcmp(timbal, "\bye"));
 
     close(soketfd_cli);
     close(soketfd);

@@ -1,13 +1,13 @@
 //Latihan 5-1 - Replace the bzero function with memset function.
-
-#include "inet.h"
+//baris 24 & 48, ada isu kat gets so tukar jadi fgets
+#include "arpa/inet.h"
 
 #define SAIZTIMBAL 1024
 
 int main(int argc, char *argv[]) {
     int soketfd;
     char timbal[SAIZTIMBAL + 1];
-    struct sockaddr_in alamLayan;
+    struct sockaddr_in alamatserver;
 
     //Mencipta sambungan soket TCP
     soketfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -21,31 +21,32 @@ int main(int argc, char *argv[]) {
     printf("\t ####################\n");
 
     //cipta struktur alamat untuk pelayan menghantar data
-    bzero((char *)&alamLayan, sizeof(alamLayan));
+    memset((char *)&alamatserver, sizeof(alamatserver), 0);
 
     //maklumat soket pelayan
-    alamLayan.sin_family = AF_INET;
-    alamLayan.sin_port = htons(TCP_SERVER_ECHO_PORT);
-    inet_pton(AF_INET, argv[1], &alamLayan.sin_addr);
+    alamatserver.sin_family = AF_INET;
+    alamatserver.sin_port = htons(TCP_SERVER_ECHO_PORT);
+    inet_pton(AF_INET, argv[1], &alamatserver.sin_addr);
 
     //menghubungkan ke pelayan
-    int temp = connect(soketfd, (struct sockaddr *)&alamLayan, sizeof(alamLayan));
+    int temp = connect(soketfd, (struct sockaddr *)&alamatserver, sizeof(alamatserver));
     if (temp < 0) {
-        printf("Tidak boleh disambungkan");
+        printf("Tidak boleh disambungkan\n");
         exit(5);
     }
 
-    printf("Telah disambungkan ke pelayan %s ...\n", inet_ntoa(alamLayan.sin_addr));
+    printf("Telah disambungkan ke pelayan %s ...\n", inet_ntoa(alamatserver.sin_addr));
 
     do {
         printf("Masukkan mesej..\n");
-        gets(timbal);
+        fgets(timbal, SAIZTIMBAL, stdin);
+        // gets(timbal);
 
         //hantar mesej melalui soketfd
         send(soketfd, timbal, SAIZTIMBAL, 0);
 
         //kosongkan mesej daripada pelayan
-        bzero(timbal, sizeof(timbal));
+        memset(timbal, sizeof(timbal), 0);
 
         //menerima mesej daripada pelayan
         recv(soketfd, timbal, SAIZTIMBAL, 0);

@@ -1,5 +1,5 @@
 //Latihan 5-1 - Replace the bzero function with memset function.
-
+//baris 24
 #include "arpa/inet.h"
 
 #define SAIZTIMBAL 1024
@@ -21,7 +21,8 @@ int main(void) {
     printf("\t ####################\n");
 
     //mencipta struktur alamat untuk pelayan (pelanggan boleh menghanrar data)
-    bzero((char *)&alamLayan, sizeof(alamLayan));
+    memset((char *)&alamLayan, sizeof(alamLayan), 0);
+
     alamLayan.sin_family = AF_INET;
     alamLayan.sin_addr.s_addr = INADDR_ANY;
     alamLayan.sin_port = htons(TCP_SERVER_ECHO_PORT);
@@ -44,12 +45,12 @@ int main(void) {
     do {
         //menerima mesej drpd pelanggan melalui soketfd pelanggan
         recv(soketfd_cli, timbal, SAIZTIMBAL, 0);
-        printf("Menerima mesej [%s]\n", timbal);
+        printf("Menerima mesej: %s\n", timbal);
 
         //menghantar kembali mesej yang diterima kepada pelanggan
         send(soketfd_cli, timbal, SAIZTIMBAL, 0);
         printf("Menghantar kembali mesej [%s]\n\n", timbal);
-    } while (strcmp(timbal, "/bye"));
+    } while (strcmp(timbal, "\bye"));
 
     close(soketfd_cli);
     close(soketfd);

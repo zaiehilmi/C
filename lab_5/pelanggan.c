@@ -1,4 +1,4 @@
-#include "inet.h"
+#include "arpa/inet.h"
 
 #define SAIZTIMBAL 1024
 
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 
     do {
         printf("Masukkan mesej..\n");
-        gets(timbal);
+        fgets(timbal, SAIZTIMBAL, stdin);
 
         //hantar mesej melalui soketfd
         send(soketfd, timbal, SAIZTIMBAL, 0);
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 
         //menerima mesej daripada pelayan
         recv(soketfd, timbal, SAIZTIMBAL, 0);
-        printf("Menerima kembali [%s]\n\n", timbal);
+        printf("Menerima kembali: %s\n\n", timbal);
 
     } while (strcmp(timbal, "\bye"));
 

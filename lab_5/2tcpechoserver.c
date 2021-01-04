@@ -1,5 +1,5 @@
 //Latihan 5-2 - Replace the INADDR_ANY macro with a specific ip address, for example 192.165.0.101
-
+//baris 26
 #include "arpa/inet.h"
 
 #define SAIZTIMBAL 1024
@@ -23,7 +23,7 @@ int main(void) {
     //mencipta struktur alamat untuk pelayan (pelanggan boleh menghanrar data)
     bzero((char *)&alamLayan, sizeof(alamLayan));
     alamLayan.sin_family = AF_INET;
-    alamLayan.sin_addr.s_addr = INADDR_ANY;
+    alamLayan.sin_addr.s_addr = "172.23.9.32";
     alamLayan.sin_port = htons(TCP_SERVER_ECHO_PORT);
 
     //ikat soketfd dgn alamat soket
@@ -49,7 +49,7 @@ int main(void) {
         //menghantar kembali mesej yang diterima kepada pelanggan
         send(soketfd_cli, timbal, SAIZTIMBAL, 0);
         printf("Menghantar kembali mesej [%s]\n\n", timbal);
-    } while (strcmp(timbal, "/bye"));
+    } while (strcmp(timbal, "\bye"));
 
     close(soketfd_cli);
     close(soketfd);
