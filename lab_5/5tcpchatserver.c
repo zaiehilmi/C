@@ -1,5 +1,5 @@
 //Latihan 5-5 - the server able to send new message after received a message from a client
-
+//baris 49-54
 #include "arpa/inet.h"
 
 #define SAIZTIMBAL 1024
@@ -17,7 +17,7 @@ int main(void) {
     }
 
     printf("\t ####################\n");
-    printf("\t ##  tcpechoserver ##\n");
+    printf("\t ##  tcpchatserver ##\n");
     printf("\t ####################\n");
 
     //mencipta struktur alamat untuk pelayan (pelanggan boleh menghanrar data)
@@ -46,9 +46,15 @@ int main(void) {
         recv(soketfd_cli, timbal, SAIZTIMBAL, 0);
         printf("Menerima mesej: %s\n", timbal);
 
-        //menghantar kembali mesej yang diterima kepada pelanggan
+        printf("Masukkan mesej..\n");
+        fgets(timbal, SAIZTIMBAL, stdin);
+
+        //hantar mesej melalui soketfd
         send(soketfd_cli, timbal, SAIZTIMBAL, 0);
-        printf("Menghantar kembali mesej: %s\n\n", timbal);
+
+        //menghantar kembali mesej yang diterima kepada pelanggan
+        // send(soketfd_cli, timbal, SAIZTIMBAL, 0);
+        // printf("Menghantar kembali mesej: %s\n\n", timbal);
     } while (strcmp(timbal, "\bye"));
 
     close(soketfd_cli);
