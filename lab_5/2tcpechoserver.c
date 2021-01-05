@@ -23,7 +23,7 @@ int main(void) {
     //mencipta struktur alamat untuk pelayan (pelanggan boleh menghanrar data)
     bzero((char *)&alamLayan, sizeof(alamLayan));
     alamLayan.sin_family = AF_INET;
-    alamLayan.sin_addr.s_addr = "172.23.9.32";
+    alamLayan.sin_addr.s_addr = inet_addr("172.23.13.167");
     alamLayan.sin_port = htons(TCP_SERVER_ECHO_PORT);
 
     //ikat soketfd dgn alamat soket

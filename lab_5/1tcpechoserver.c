@@ -50,7 +50,7 @@ int main(void) {
         //menghantar kembali mesej yang diterima kepada pelanggan
         send(soketfd_cli, timbal, SAIZTIMBAL, 0);
         printf("Menghantar kembali mesej [%s]\n\n", timbal);
-    } while (strcmp(timbal, "\bye"));
+    } while (strcmp(timbal, "/bye"));
 
     close(soketfd_cli);
     close(soketfd);

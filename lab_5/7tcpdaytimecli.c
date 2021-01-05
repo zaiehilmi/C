@@ -26,11 +26,11 @@ int main(int argc, char **argv) {
 
     infopelayan = getservbyname("daytime", "tcp");
     if (!infopelayan) {
-        fprintf(stderr, "Tiada pelayan waktu siang\n");
+        fprintf(stderr, "Tiada pelayan daytime\n");
         exit(2);
     }
 
-    printf("Port pelayan siang: %d\n", ntohs(infopelayan->s_port));
+    printf("Port pelayan daytime: %d\n", ntohs(infopelayan->s_port));
 
     //bina soket
     soketfd = socket(AF_INET, SOCK_STREAM, 0);
