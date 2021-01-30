@@ -31,7 +31,7 @@ int main(void) {
 
     server.sin_family = AF_INET;
     server.sin_port = htons(8001);
-    server.sin_addr.s_addr = inet_addr("172.28.251.153");
+    server.sin_addr.s_addr = inet_addr("127.0.0.1");
 
     bind(soketfd, (struct sockaddr *)&server, sizeof(server));
     ls = listen(soketfd, BACKLOG);
