@@ -17,7 +17,8 @@ char *fifo = "penghantaranfifo";  //nama fail fifo
 int main(int argc, char *argv[]) {
     int fd;
     char timbal[SAIZTIMBAL];
-
+    // static struct sigaction tindak;
+    // tindak.sa_handler = SIGALRM;
     signal(SIGALRM, keluar);
     alarm(20);
 
