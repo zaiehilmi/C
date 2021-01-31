@@ -67,7 +67,7 @@ int main(void) {
                 bzero(timbal, sizeof(timbal));
                 printf("Mesej darpada client TCP: ");
                 read(soketfd_cli, timbal, sizeof(timbal));
-                puts("timbal");
+                puts(timbal);
                 write(soketfd_cli, (const char *)mesej, sizeof(timbal));
                 close(soketfd_cli);
                 exit(0);
@@ -80,11 +80,12 @@ int main(void) {
             clilen = sizeof(client);
             bzero(timbal, sizeof(timbal));
 
-            printf("\n Mesej daripada client UDP: ");
+            printf("\nMesej daripada client UDP: ");
             nbaca = recvfrom(udpfd, timbal, sizeof(timbal), 0, (struct sockaddr *)&client, &clilen);
-
             puts(timbal);
+
             sendto(udpfd, (const char *)mesej, sizeof(timbal), 0, (struct sockaddr *)&client, sizeof(client));
+            return 0;
         }
     }
 }
