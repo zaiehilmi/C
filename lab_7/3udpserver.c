@@ -5,7 +5,8 @@
 
 int main() {
     int soketfd, clilen, ret, bilbyte;
-    char timbalterima[SAIZMAKS], timbalhantar[SAIZMAKS];
+    // char timbalterima[SAIZMAKS], timbalhantar[SAIZMAKS];
+    char timbal[SAIZMAKS];
 
     struct sockaddr_in server, client;
 
@@ -15,6 +16,7 @@ int main() {
         exit(1);
     }
 
+    bzero((char *)&server, sizeof(server));
     server.sin_family = AF_INET;
     server.sin_port = htons(MYPORT);
     server.sin_addr.s_addr = INADDR_ANY;
@@ -28,19 +30,20 @@ int main() {
     while (1) {
         printf("Server UDP menunggu Client\n");
         clilen = sizeof(client);
-        bilbyte = recvfrom(soketfd, timbalterima, sizeof(timbalterima), 0, (struct sockaddr *)&client, &clilen);
+        bilbyte = recvfrom(soketfd, timbal, sizeof(timbal), 0, (struct sockaddr *)&client, &clilen);
 
         if (bilbyte == -1)
             printf("ralat untuk menerima\n");
 
         else {
-            timbalterima[bilbyte] = '\0';
+            // timbal[bilbyte] = '\0';
             printf("Mesej diterima daripada Client [%s: %d]: ", inet_ntoa(client.sin_addr), ntohs(client.sin_port));
-            printf("%s\n", timbalterima);
+            printf("%s\n", timbal);
         }
 
-        strcpy(timbalhantar, "hai");
-        bilbyte = sendto(soketfd, timbalhantar, sizeof(timbalhantar), 0, (struct sockaddr *)&client, clilen);
+        bzero(timbal, sizeof(timbal));
+        strcpy(timbal, "hai");
+        bilbyte = sendto(soketfd, timbal, sizeof(timbal), 0, (struct sockaddr *)&client, clilen);
 
         if (bilbyte == -1)
             printf("ralat untuk menghantar mesej\n");

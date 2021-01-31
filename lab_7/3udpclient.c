@@ -1,10 +1,12 @@
+//Latihan 7-3 - demonstrate and display the output
+
 #include <errno.h>
 
 #include "arpa/inet.h"
 
 #define SAIZMAKS 512
 #define MYPORT 5606
-#define ALAMAT "172.28.251.153"
+#define ALAMAT "172.28.246.24"
 
 int main() {
     int soketfd, servlen, temp, bilbyte;

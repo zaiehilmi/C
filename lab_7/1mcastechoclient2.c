@@ -1,5 +1,7 @@
+// Latihan 7-1 - the input is the local time of client host to be send and echoed by the server
 
 #include <errno.h>
+#include <time.h>
 
 #include "arpa/inet.h"
 
@@ -8,13 +10,16 @@
 
 int main(int argc, char *argv[]) {
     int soketfd, temp, i;
+    char timbal[1024];
     unsigned char ttl = 1;
+
+    time_t masa;
     struct sockaddr_in client, server;
 
-    if (argc < 3) {
-        printf("Usage : %s <mgroup> <data1> <data2> ... \n", argv[0]);
-        exit(1);
-    }
+    // if (argc < 3) {
+    //     printf("Usage : %s <mgroup> <data1> <data2> ... \n", argv[0]);
+    //     exit(1);
+    // }
 
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = inet_addr(argv[1]);
@@ -51,8 +56,7 @@ int main(int argc, char *argv[]) {
 
     printf("Sending data on multicast group '%s' \n", inet_ntoa(server.sin_addr));
 
-    /* send data */
-    for (i = 2; i < argc; i++) {
+    /* for (i = 2; i < argc; i++) {
         temp = sendto(soketfd, argv[i], strlen(argv[i]) + 1, 0, (struct sockaddr *)&server, sizeof(server));
 
         if (temp < 0) {
@@ -60,9 +64,10 @@ int main(int argc, char *argv[]) {
             close(soketfd);
             exit(1);
         }
-    } /* close */
+    } */
+    strcpy(timbal, ctime(&masa));
 
-    /* close socket and exit */
+    sendto(soketfd, timbal, 1024, 0, (struct sockaddr *)&server, sizeof(server));
     close(soketfd);
     return 0;
 }
