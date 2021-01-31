@@ -21,7 +21,7 @@ int main() {
     bzero(&server, sizeof(server));
 
     server.sin_family = AF_INET;
-    server.sin_addr.s_addr = inet_addr("172.28.246.24");
+    server.sin_addr.s_addr = inet_addr("172.31.142.128");
     server.sin_port = htons(PORT);
 
     n = connect(soketfd, (struct sockaddr *)&server, sizeof(server));

@@ -22,7 +22,7 @@ int main(void) {
     //mengisi maklumat server
     server.sin_family = AF_INET;
     server.sin_port = htons(PORT);
-    server.sin_addr.s_addr = inet_addr("172.28.246.24");
+    server.sin_addr.s_addr = inet_addr("172.31.142.128");
 
     //hantar hello ke server
     sendto(soketfd, (const char *)mesej, strlen(mesej), 0, (const struct sockaddr *)&server, sizeof(server));

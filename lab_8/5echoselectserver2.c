@@ -19,8 +19,8 @@ int main(int argc, char *argv[]) {
     struct timeval tv;
     struct sockaddr_in server, client;
 
-    tv.tv_sec = 2;
-    tv.tv_usec = 50000;
+    tv.tv_sec = 120;
+    tv.tv_usec = 50000000;
 
     for (i = 0; i < client_max; i++)
         client_sd[i] = 0;
