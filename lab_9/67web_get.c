@@ -16,6 +16,7 @@ void parse_url(char *url, char **hostname, char **port, char **path) {
     char *p;
     p = strstr(url, "://");
 
+    //senaraikan berapa jenis protokol yang ada
     char *protocol = 0;
     if (p) {
         protocol = url;
@@ -35,6 +36,7 @@ void parse_url(char *url, char **hostname, char **port, char **path) {
     *hostname = p;
     while (*p && *p != ':' && *p != '/' && *p != '#') ++p;
 
+    //hos akan gunakan port 80
     *port = "80";
     if (*p == ':') {
         *p++ = 0;
@@ -43,18 +45,21 @@ void parse_url(char *url, char **hostname, char **port, char **path) {
 
     while (*p && *p != '/' && *p != '#') ++p;
 
+    //senaraikan perjalanan
     *path = p;
 
     while (*p && *p != '#') ++p;
 
     if (*p == '#') *p = 0;
 
+    //paparkan nama hos, port, dan perjalanan
     printf("hostname: %s\n", *hostname);
     printf("port: %s\n", *port);
     printf("path: %s\n", *path);
 }
 
 void send_request(int s, char *hostname, char *port, char *path) {
+    //secara keseluruhan ialah untuk menghantar permintaan untuk menggunakan service ke server
     char buffer[2048];
 
     sprintf(buffer, "GET/%s HTTP/1.1\r\n", path);
@@ -68,13 +73,15 @@ void send_request(int s, char *hostname, char *port, char *path) {
 }
 
 int connect_to_host(char *hostname, char *port) {
+    //secara keseluruhan untuk membuat sambungan ke hos
+
     printf("Configuration remote address...\n");
     struct addrinfo hints, *peer_addr;
 
     memset(&hints, 0, sizeof(hints));
 
     hints.ai_socktype = SOCK_STREAM;
-
+    //Translate name of a service location and/or a service name to set of socket addresses.
     if (getaddrinfo(hostname, port, &hints, &peer_addr)) {
         fprintf(stderr, "getaddrinfo failed. (%d)\n", errno);
         exit(1);
@@ -84,6 +91,7 @@ int connect_to_host(char *hostname, char *port) {
     char address_buffer[100];
     char service_buffer[100];
 
+    //Translate a socket address to a location and service name
     getnameinfo(peer_addr->ai_addr, peer_addr->ai_addrlen,
                 address_buffer, sizeof(address_buffer),
                 service_buffer, sizeof(service_buffer),
@@ -92,12 +100,14 @@ int connect_to_host(char *hostname, char *port) {
     printf("Creating socket...\n");
     int server;
 
+    //bina soket
     server = socket(peer_addr->ai_family, peer_addr->ai_socktype, peer_addr->ai_protocol);
     if (!ISVALIDSOCKET(server)) {
         fprintf(stderr, "socket() failed. (%d)\n", errno);
         exit(1);
     }
 
+    //sambungan ke server
     printf("Connecting...\n");
     if (connect(server, peer_addr->ai_addr, peer_addr->ai_addrlen)) {
         fprintf(stderr, "connect() failed. (%d)\n", errno);
@@ -117,7 +127,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 #endif
-
+    //masukkan alamat ip pada argv[1]
     if (argc < 2) {
         fprintf(stderr, "usage: web_get url\n");
         return 1;
@@ -127,6 +137,7 @@ int main(int argc, char *argv[]) {
     char *hostname, *port, *path;
     parse_url(url, &hostname, &port, &path);
 
+    //memulakan sambungan soket ke hos
     int server = connect_to_host(hostname, port);
     send_request(server, hostname, port, path);
 
@@ -145,30 +156,35 @@ int main(int argc, char *argv[]) {
     int remaining = 0;
 
     while (1) {
+        //selepas daripada timeout akan keluar error
         if ((clock() - start_time) / CLOCKS_PER_SEC > TIMEOUT) {
             fprintf(stderr, "timeout after %.2f seconds\n", TIMEOUT);
             return 1;
         }
 
+        //jika buffer tak cukup ruang akan paparkan errror
         if (p == end) {
             fprintf(stderr, "out of buffer space\n");
             return 1;
         }
 
+        //mengosongkan fd dan memasukkan server fd ke dalam pool reads
         fd_set reads;
         FD_ZERO(&reads);
         FD_SET(server, &reads);
 
         struct timeval timeout;
-        timeout.tv_sec = 0;
-        timeout.tv_usec = 200000;
+        timeout.tv_sec = 0;        //saat
+        timeout.tv_usec = 200000;  //mikrosaat
 
         if (select(server + 1, &reads, 0, 0, &timeout) < 0) {
             fprintf(stderr, "select() failed. (%d)\n", errno);
             return 1;
         }
 
+        //jika server sd telah dimasukkan dalam pool, maka statement ni jadi true dan boleh run block ni
         if (FD_ISSET(server, &reads)) {
+            //proses penerimaan maklumat
             int bytes_received = recv(server, p, end - p, 0);
             if (bytes_received < 1) {
                 if (encoding == connection && body) {
