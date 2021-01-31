@@ -4,10 +4,14 @@
 #define PORT 8080
 
 int main(int argc, char const *argv[]) {
-    int soketfd, soketfd_baru, temp;
+    int soketfd, soketfd_baru, temp, on = 1;
     long nbaca;
     char timbal[30000] = {0};
-    char *hello = "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 30\n\n Hello, network programming!";
+    char *hello =
+        "HTTP/1.1 200 OK\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
+        "<!DOCTYPE html> <html> <head> <title>Hello from network programming course</title>"
+        "</head>"
+        "<body><h1>Hello Network Programmer </h1></body></html>\r\n";
 
     struct sockaddr_in server;
     int addrlen = sizeof(server);
@@ -23,6 +27,8 @@ int main(int argc, char const *argv[]) {
     server.sin_port = htons(PORT);
 
     memset(server.sin_zero, '\0', sizeof(server.sin_zero));
+
+    setsockopt(soketfd, SOL_SOCKET, SO_REUSEADDR, &on, 4);
     temp = bind(soketfd, (struct sockaddr *)&server, sizeof(server));
     if (temp < 0) {
         perror("Ralat untuk mengikat\n");
