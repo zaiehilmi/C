@@ -1,6 +1,7 @@
 //Latihan 8-5 - select() uses timeout of 2 minutes and 50 seconds to properly exit the program
 
 #include <errno.h>
+#include <sys/select.h>
 #include <sys/time.h>
 
 #include "arpa/inet.h"
@@ -12,11 +13,14 @@
 int main(int argc, char *argv[]) {
     int opt, soketfd, clilen, soketfd_cli, client_sd[30], client_max = 30, aktiviti, i, nbaca, sd = 0, max_sd;
     char timbal[1025];
-    char *mesej = "大家好";
+    char *mesej = "Selamat malam semua";
 
     fd_set readfds;
-
+    struct timeval tv;
     struct sockaddr_in server, client;
+
+    tv.tv_sec = 2;
+    tv.tv_usec = 50000;
 
     for (i = 0; i < client_max; i++)
         client_sd[i] = 0;
@@ -57,6 +61,7 @@ int main(int argc, char *argv[]) {
     while (1) {
         FD_ZERO(&readfds);
         FD_SET(soketfd, &readfds);
+        FD_CLR(0, &readfds);
         max_sd = soketfd;
 
         for (i = 0; i < client_max; i++) {
@@ -68,6 +73,8 @@ int main(int argc, char *argv[]) {
             if (sd > max_sd)
                 max_sd = sd;
         }
+
+        aktiviti = select(max_sd + 1, &readfds, NULL, NULL, &tv);
 
         if ((aktiviti < 0) && (errno != EINTR))
             printf("gagal untuk memilih\n");
@@ -94,21 +101,21 @@ int main(int argc, char *argv[]) {
                     break;
                 }
             }
-            for (i = 0; i < client_max; i++) {
-                sd = client_sd[i];
+        }
+        for (i = 0; i < client_max; i++) {
+            sd = client_sd[i];
 
-                if (FD_ISSET(sd, &readfds)) {
-                    nbaca = read(sd, timbal, 1024);
-                    if (nbaca == 0) {
-                        getpeername(sd, (struct sockaddr *)&client, &clilen);
-                        printf("Hos menyahsambung, ip %s, port %d \n", inet_ntoa(client.sin_addr), ntohs(client.sin_port));
+            if (FD_ISSET(sd, &readfds)) {
+                nbaca = read(sd, timbal, 1024);
+                if (nbaca == 0) {
+                    getpeername(sd, (struct sockaddr *)&client, &clilen);
+                    printf("Hos menyahsambung, ip %s, port %d \n", inet_ntoa(client.sin_addr), ntohs(client.sin_port));
 
-                        close(sd);
-                        client_sd[i] = 0;
-                    } else {
-                        timbal[nbaca] = '\0';
-                        send(sd, timbal, strlen(timbal), 0);
-                    }
+                    close(sd);
+                    client_sd[i] = 0;
+                } else {
+                    timbal[nbaca] = '\0';
+                    send(sd, timbal, strlen(timbal), 0);
                 }
             }
         }
