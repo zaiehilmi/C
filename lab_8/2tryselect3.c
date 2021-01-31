@@ -11,7 +11,7 @@ int main(void) {
     fd_set readfds;
 
     tv.tv_sec = 2;
-    tv.tv_usec = 500000;
+    tv.tv_usec = 50000;
 
     printf("tidak membuat apa-apa atau tekan sebarang kekunci kemudian <enter>\n\n");
 
