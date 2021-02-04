@@ -26,6 +26,7 @@ void parse_url(char *url, char **hostname, char **port, char **path) {
     } else
         p = url;
 
+    //semak protokol yang telah disenaraikan dan jika tidak terdapat http maka program akan terus keluar
     if (protocol) {
         if (strcmp(protocol, "http")) {
             fprintf(stderr, "Protokol tidak diketahui %s. hanya 'http' disokong\n", protocol);
